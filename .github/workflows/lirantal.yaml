@@ -1,0 +1,15 @@
+name: Test site for publicly known js vulnerabilities
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test site for publicly known js vulnerabilities
+        uses: lirantal/is-website-vulnerable@main
+        with:
+          scan-url: 'https://studio.camerafi.com/ko'
