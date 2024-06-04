@@ -9,8 +9,6 @@ on:
   push:
     branches-ignore:
       - "main"
-    paths:
-      - ./chapter9/zero-to-next
 
 # 필수 값으로 이 액션에서 실행할 잡을 의미한다.
 # 여러 개 지정시 병렬로 실행된다.
