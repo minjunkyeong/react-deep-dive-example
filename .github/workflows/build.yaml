@@ -1,24 +1,36 @@
+# 액션의 이름. 필수는 아니다.
 name: chapter9 build
+
+# 액션이 실행될 때 구별할 수 있는 타이틀명. 필수는 아니다.
 run-name: ${{ github. actor }} has been added new commit.
 
+# 언제 이 액션을 실행할지 정의한다. 현재는 main 브랜치를 제외하고 푸시했을 때 실행된다.
 on:
   push:
     branches-ignore:
-      - 'main'
-    paths:
-      - ./chapter9/zero-to-next
+      - "main"
 
+# 필수 값으로 이 액션에서 실행할 잡을 의미한다.
+# 여러 개 지정시 병렬로 실행된다.
 jobs:
+  # build : action의 예약어가 아닌 임의의 이름으로 name과 같이 명시하는 역할이다.
   build:
+    # runs-on : 어느 환경에서 작업이 실행될지 결정한다. 기본적으로 ubuntu-latest를 쓰면 되고 커스텀 러너를 쓰고 싶다면 다른 것 쓰자. 그런데 그럴 일이 있을까?
     runs-on: ubuntu-latest
+    # steps : 잡에서 순차적으로 실행할 작업을 정의한다.
     steps:
+      # uses : 해당 스텝에서 작업에 사용할 액션을 의미. actions/checkout@v3은 별도 파라미터가 없으면 마지막 커밋 기준 체크아웃한다. 필수로 써야 한다.
       - uses: actions/checkout@v3
+      # uses : 러너에 Node.js를 설치한다.
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: 'install dependencies'
+      - name: "install dependencies"
+        # working-directory : 해당 디렉토리에서 작업을 실행한다.
         working-directory: ./chapter9/zero-to-next
+        # run : 해당 디렉토리에서 npm ci를 실행한다.
         run: npm ci
-      - name: 'build'
+      - name: "build"
         working-directory: ./chapter9/zero-to-next
+        # run : 해당 디렉토리에서 npm run build를 실행한다.
         run: npm run build
